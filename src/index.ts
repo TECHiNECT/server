@@ -8,16 +8,16 @@ export class SignalingServer {
   public server: http.Server
   public wss: WebSocket.Server
 
-  constructor() {
+  constructor(server?: http.Server) {
     this.app = express()
-    this.server = http.createServer(this.app)
+    this.server = server || http.createServer(this.app)
     this.wss = new WebSocket.Server({ server: this.server })
   }
 
   public start(port = 5000) {
     webSocketConnection(this.wss)
     this.server.listen(port, () => {
-      console.log(`NextStax Server started on port ${port}`)
+      console.log(`Signaling Server started on port ${port}`)
     })
   }
 
